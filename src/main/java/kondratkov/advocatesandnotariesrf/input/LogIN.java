@@ -1,11 +1,13 @@
 package kondratkov.advocatesandnotariesrf.input;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -74,6 +76,12 @@ public class LogIN extends Activity {
         setContentView(R.layout.input_log_in);
         dialog = new Dialog(LogIN.this);
         in = new IN();
+
+        ActivityCompat.requestPermissions(this, new String[] {
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.INTERNET
+        }, 13);
 
         etPhoneEmail = (EditText) findViewById(R.id.etPhoneEmail);
         etPasswl = (EditText) findViewById(R.id.etPasswl);
@@ -471,21 +479,26 @@ String ss = "http://"+in.get_url()+"/Account/ForgotPassword";
                 try{
                     Gson gson = new Gson();
                     in.set_list_specialization(gson.fromJson(result, JuristSpecialization[].class));
-                }catch (Exception e){}
 
-                if(in.get_list_specialization().length!=0){
 
-                    String s = in.get_list_specialization()[2].SectorName;
-                    //Intent intentReg1 = new Intent(LogIN.this, SignUP.class);
-                    //Intent intentReg1 = new Intent(LogIN.this, Asked_user.class);
+                    if(in.get_list_specialization().length!=0){
 
+                        String s = in.get_list_specialization()[2].SectorName;
+                        //Intent intentReg1 = new Intent(LogIN.this, SignUP.class);
+                        //Intent intentReg1 = new Intent(LogIN.this, Asked_user.class);
+
+                        LogIN.this.finish();
+                    }
+
+                    else {
+                        Toast.makeText(LogIN.this,
+                                "Нет связи с сервером!",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }catch (Exception e){
                     LogIN.this.finish();
                 }
-                else {
-                    Toast.makeText(LogIN.this,
-                            "Нет связи с сервером!",
-                            Toast.LENGTH_LONG).show();
-                }
+
             }else {
                 Toast.makeText(LogIN.this,
                         "Нет связи с сервером!",

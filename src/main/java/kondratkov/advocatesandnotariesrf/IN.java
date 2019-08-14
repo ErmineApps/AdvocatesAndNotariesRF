@@ -97,7 +97,7 @@ public class IN {
 
 
     //public static String url = "195.128.124.172/api";
-    private static String url = "app.mmka.info";
+    private static String url = "lawyersandnotaries.ru";
     public String get_url(){return this.url+"/api";}
     public String get_url_token(){return this.url+"/token";}
     public void set_url (String url){this.url = url;}

@@ -46,6 +46,12 @@ public class MainActivity extends Activity implements View.OnTouchListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActivityCompat.requestPermissions(this, new String[] {
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.INTERNET
+        }, 13);
+
         in = new IN();
         main_scrollView = (ScrollView) findViewById(R.id.main_scrollView);
         main_scrollView.setOnTouchListener(this);
